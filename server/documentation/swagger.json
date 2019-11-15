@@ -157,7 +157,7 @@
                 }
             }
         },
-        "/add-value-account":
+        "/add":
         {
             "put": 
             {
@@ -202,7 +202,7 @@
                 }
             }
         },
-        "/remove-value-account":
+        "/remove":
         {
             "put": 
             {

@@ -1,0 +1,34 @@
+<div class="row pt-5">
+
+  <div class="col-md-6 mx-auto">
+
+    <div class="card rounded-0">
+
+      <div class="card-header">
+        <h3 class="mb-0">Modifier la solde</h3>
+      </div>
+
+      <div class="card-body">
+
+        <form class="form">
+
+          <h4>La solde actuelle: </h4>
+
+          <div class="form-group">
+            <label for="">Saisir un montant</label>
+            <input [(ngModel)]="account.account" name="account" type="text" class="form-control rounded-0" required>
+          </div>
+
+          <button (click)="removeAccount()" type="button" class="btn btn-success float-right">Dépôt</button>
+
+          <button (click)="removeAccount()" type="button" class="btn btn-danger float-right">Retrait</button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

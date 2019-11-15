@@ -159,7 +159,57 @@ router.get('/account/:id', verifyToken, (req, res) => {
 
 });
 
-// METHODE D'AJOUT SUR LA SOLDE DU COMPTE
+router.get('/edit/:id', (req, res) => {
+
+    let id = req.params.id;
+
+    User.findById(id, function (err, user)
+    {
+        res.json(user);
+    })
+});
+
+// METHODE DE RETRAIT SUR LA SOLDE DU COMPTE
+router.put('/account/add/:id', verifyToken, (req, res) => {
+    
+    User.findById(req.params.id, function(err, user) 
+    {
+        if(err)
+        {
+            return res.status(500).send(`Nous rencontrons un problème dans la recherche du compte`);
+        }
+
+        if(!user)
+        {
+            res.status(404).send("Compte non trouvé");
+        }
+        else 
+        {
+          const modifiedAccount = user.account + req.body.account;
+
+          if (modifiedAccount <= 0)
+          {
+            return res.status(401).send(`Vous n'avez pas assez d'argent`);
+          }
+          else
+          {
+            modifiedAccount.save().then(result => 
+            {
+                console.log(result);
+                res.status(200).send('Ajout effectué');
+            })
+            .catch(err => 
+            {
+                console.log(err);
+                res.status(400).send("Ajout impossible");
+            });
+          }
+    
+        }
+    });
+});
+
+// METHODE DE RETRAIT SUR LA SOLDE DU COMPTE
 router.put('/account/remove/:id', verifyToken, (req, res) => {
     
     User.findById(req.params.id, function(err, user) 
@@ -175,23 +225,25 @@ router.put('/account/remove/:id', verifyToken, (req, res) => {
         }
         else 
         {
-          user.account = req.body.account;
+          const modifiedAccount = user.account - req.body.account;
 
-          if (user.account <= 0)
+          if (modifiedAccount <= 0)
           {
             return res.status(401).send(`Vous n'avez pas assez d'argent`);
           }
-    
-          user.save().then(result => 
+          else
           {
-            console.log(result);
-            res.status(200).send('Ajout effectué');
-          })
-          .catch(err => 
-          {
-            console.log(err);
-            res.status(400).send("Ajout impossible");
-          });
+            modifiedAccount.save().then(result => 
+            {
+                console.log(result);
+                res.status(200).send('Retrait effectué');
+            })
+            .catch(err => 
+            {
+                console.log(err);
+                res.status(400).send("Retrait impossible");
+            });
+          }
     
         }
     });
