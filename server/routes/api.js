@@ -80,8 +80,12 @@ router.post('/register', (req, res) => {
         {
             const user = new User({
                 _id: new mongoose.Types.ObjectId(),
+                name: req.body.name,
+                surname: req.body.surname,
                 email: req.body.email,
-                password: hash
+                password: hash,
+                account: req.body.account,
+                bank: req.body.bank,
             });    
             
             user.save()
@@ -156,7 +160,7 @@ router.get('/account/:id', verifyToken, (req, res) => {
 });
 
 // METHODE D'AJOUT SUR LA SOLDE DU COMPTE
-router.put('/account/add/:id', verifyToken, (req, res) => {
+router.put('/account/remove/:id', verifyToken, (req, res) => {
     
     User.findById(req.params.id, function(err, user) 
     {
@@ -172,6 +176,11 @@ router.put('/account/add/:id', verifyToken, (req, res) => {
         else 
         {
           user.account = req.body.account;
+
+          if (user.account <= 0)
+          {
+            return res.status(401).send(`Vous n'avez pas assez d'argent`);
+          }
     
           user.save().then(result => 
           {
