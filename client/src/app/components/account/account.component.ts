@@ -9,6 +9,7 @@ export class AccountComponent implements OnInit {
 
   constructor() { }
 
+  userId: any;
   userName: string;
   userSurname: string;
   userEmail: string;
@@ -22,6 +23,11 @@ export class AccountComponent implements OnInit {
     const tokenDecodeB64 = atob(tokenSlipted);
     const parseToken = JSON.parse(tokenDecodeB64);
     const tokenSub = parseToken.sub;
+
+    const id = JSON.parse(tokenSub)._id;
+    this.userId = id;
+
+    console.log(this.userId);
 
     const email = JSON.parse(tokenSub).email;
     this.userEmail = email;

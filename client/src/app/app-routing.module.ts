@@ -7,6 +7,7 @@ import { AccountComponent } from './components/account/account.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
+import { EditComponent } from './components/account/edit/edit.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,13 @@ const routes: Routes = [
   {
     path: 'account',
     canActivate: [AuthGuard],
-    component: AccountComponent
+    component: AccountComponent,
+    children: [
+      {
+        path: 'edit/:id',
+        component: EditComponent
+      }
+    ]
   }
 ];
 

@@ -10,7 +10,7 @@ export class AuthService {
 
   private registerUrl = 'http://localhost:3000/api/register';
   private loginUrl = 'http://localhost:3000/api/login';
-  // private accountUrl = 'http://localhost:3000/api/account';
+  private accountUrl = 'http://localhost:3000/api/account';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -36,4 +36,17 @@ export class AuthService {
   getToken() {
     return localStorage.getItem('token');
   }
+
+  editAccount(id: any) {
+    return this.http.get(`${this.accountUrl}/edit/${id}`);
+  }
+
+  removeAccount(user: {}, id: any) {
+    return this.http.put<any>(`${this.accountUrl}/remove/${id}`, user);
+  }
+
+  addAccount(user: {}, id: any) {
+    return this.http.put<any>(`${this.accountUrl}/add/${id}`, user);
+  }
+
 }
