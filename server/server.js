@@ -5,7 +5,7 @@ const cors = require('cors');
 
 // MODULE POUR CREATION DE DOCUMENTATION
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerDocument = require('./documentation/swagger.json');
 
 // OPTIONS DU SERVEUR ET ROUTES
 const PORT = 3000;
