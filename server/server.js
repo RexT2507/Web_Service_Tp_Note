@@ -7,15 +7,21 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
+// OPTIONS DU SERVEUR ET ROUTES
 const PORT = 3000;
-
+const api = require('./routes/api');
 const server = express();
 
 
 server.use(bodyParser.json());
 
+// RACINE DE L'API
+server.use('/api', api);
+
+// ROUTE DE LA DOCUMENTATION
 server.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// RACINE DU SERVEUR
 server.get('/', function(req, res)
 {
     res.send(`
